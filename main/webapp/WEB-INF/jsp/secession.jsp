@@ -9,9 +9,9 @@
 </head>
 <body>
 <h1>メモウェブ退会</h1>
-<c:if test="${not empty errorMessage}">
-    <p class="error">${errorMessage}</p>
-</c:if>
+<c:forEach var="errorMessage" items="${errorMessage}">
+    <p style="color:red" class="error">${errorMessage}</p>
+</c:forEach>
 <form action="SecessionServlet" method="post">
 ユーザーID:<input type="text" name="userId"><br>
 パスワード:<input type="password" name="pass"><br>

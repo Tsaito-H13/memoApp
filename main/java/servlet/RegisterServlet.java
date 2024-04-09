@@ -84,7 +84,7 @@ public class RegisterServlet extends HttpServlet {
 			errorMessages.add("※そのユーザーIDは既に存在します");
 		}
 		
-		if(errorMessages.isEmpty()) {
+		if(errorMessages.isEmpty()) { //問題がない場合
 			//登録するアカウントの情報を設定
 			Account registerAccount = new Account(userId, pass, name);
 			
@@ -96,7 +96,7 @@ public class RegisterServlet extends HttpServlet {
 			dispatcher.forward(request, response);
 		} else {
 			//エラーメッセージをリクエストスコープに保存
-			request.setAttribute("errorMessages", errorMessages);
+			request.setAttribute("errorMessage", errorMessages);
 			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/register.jsp");
 			dispatcher.forward(request, response);
