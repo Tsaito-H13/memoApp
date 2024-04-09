@@ -14,7 +14,7 @@
 ユーザーID：<c:out value="${registerAccount.userId}" /><br>
 名前：<c:out value="${registerAccount.name}" /><br>
 </p>
-<a href="RegisterServlet">▶戻る</a>
-<a href="RegisterServlet?action=done">▶登録</a>
+<a href="RegisterServlet?action=done">▶登録</a><br>
+<a href="RegisterServlet">▶戻る</a><br>
 </body>
 </html>

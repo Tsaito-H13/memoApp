@@ -1,6 +1,8 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -41,21 +43,31 @@ public class Main extends HttpServlet {
 		String title = request.getParameter("title");
 		String memo = request.getParameter("memo");
 		
-		//入力値チェック
-		if(title != null && title.length() != 0 && memo != null && memo.length() != 0) { //入力値が正しい
-			//メモインスタンスの作成
-			Memo text = new Memo(title, memo);
-			
-			MemoLogic memoLogic = new MemoLogic();
-			
-			//メモを作成
-			memoLogic.execute(text);
-		} else { //入力値が正しくない
-			//エラーメッセージをリクエストスコープに保存
-			request.setAttribute("errorMessage", "※タイトルとメモを入力してください");
+		//エラーメッセージリストの作成
+		List<String> errorMessages = new ArrayList<>();
+		
+		//入力値のチェック
+		if(title == null || title.isEmpty()) {
+			errorMessages.add("※タイトルを入力してください");
+		}
+		if(memo == null || memo.isEmpty()) {
+			errorMessages.add("※メモを入力してください");
+		}
+		
+		if(!errorMessages.isEmpty()) { //エラーメッセージが格納された場合
+			//エラーメッセージをリクエストスコープへ保存
+			request.setAttribute("errorMessage", errorMessages);
+			//フォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/main.jsp");
 			dispatcher.forward(request, response);
 		}
+		
+		Memo text = new Memo(title, memo);
+			
+		MemoLogic memoLogic = new MemoLogic();
+			
+		//メモを作成
+		memoLogic.execute(text);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/submit.jsp");
 		dispatcher.forward(request, response);

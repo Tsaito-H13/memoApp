@@ -21,16 +21,48 @@ public class SecessionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/secession.jsp");
+		
+		//フォワード先
+		String forwardPath = null;
+		
+		//サーブレットクラスの動作を決定する「action」の値をリクエストパラメータから取得
+		String action = request.getParameter("action");
+
+		if(action == null) { //削除開始をリクエストされたときの処理
+			//フォワード先の設定
+			forwardPath = "WEB-INF/jsp/secession.jsp";
+		} else if(action.equals("done")) { //削除実行をリクエストされたときの処理
+			//セッションスコープに保存された削除ユーザーを取得
+			HttpSession session = request.getSession();
+			User secessionUser = (User)session.getAttribute("secessionUser");
+			
+			//削除処理の呼び出し
+			SecessionLogic secessionLogic = new SecessionLogic();
+			boolean secessionResult = secessionLogic.execute(secessionUser);
+			
+			if(secessionResult) { //削除が出来た場合
+				//フォワード先の設定
+				forwardPath = "WEB-INF/jsp/secessionDone.jsp";
+				//不要になったセッションスコープ内のインスタンスを削除
+				session.removeAttribute("secessionUser");
+			} else { //削除ができなかった場合
+				//フォワード先の設定
+				forwardPath = "WEB-INF/jsp/secessionNG.jsp";
+				//不要になったセッションスコープ内のインスタンスを削除
+				session.removeAttribute("secessionUser");
+			}
+		}
+		
+		//設定先にフォワード
+		RequestDispatcher dispatcher = request.getRequestDispatcher(forwardPath);
 		dispatcher.forward(request, response);
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//リクエストパラメータを取得
 		String userId = request.getParameter("userId");
 		String pass = request.getParameter("pass");
-		
-		boolean result = false;
 		
 		//エラーメッセージリストの作成
 		List<String> errorMessages = new ArrayList<>();
@@ -43,14 +75,7 @@ public class SecessionServlet extends HttpServlet {
 			errorMessages.add("※パスワードを入力してください");
 		}
 		
-		if(errorMessages.isEmpty()) { //問題がない場合
-			//削除するユーザー情報を設定
-			User user = new User(userId, pass);
-			//削除処理の実行
-			SecessionLogic secessionLogic = new  SecessionLogic();
-			//結果をresultに格納
-			result = secessionLogic.execute(user);
-		} else {  // エラーメッセージが格納された場合
+		if(!errorMessages.isEmpty()) { //エラーメッセージが格納された場合
 			//エラーメッセージをリクエストスコープへ保存
 			request.setAttribute("errorMessage", errorMessages);
 			//フォワード
@@ -58,17 +83,15 @@ public class SecessionServlet extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 		
-		if(result) { //削除できた場合
-			//セッションスコープの破棄
-			HttpSession session = request.getSession();
-			session.invalidate();
-			//フォワード
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/secessionOK.jsp");
-			dispatcher.forward(request, response);
-		} else { //削除できない場合
-			//フォワード
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/secessionNG.jsp");
-			dispatcher.forward(request, response);
-		}
+		//削除するユーザーの情報を設定
+		User secessionUser = new User(userId, pass);
+		
+		//セッションスコープに登録ユーザーを保存
+		HttpSession session = request.getSession();
+		session.setAttribute("secessionUser", secessionUser);
+		
+		//フォワード
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/secessionConfirm.jsp");
+		dispatcher.forward(request, response);
 	}
 }

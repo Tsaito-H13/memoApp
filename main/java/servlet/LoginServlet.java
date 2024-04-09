@@ -1,6 +1,8 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -29,22 +31,43 @@ public class LoginServlet extends HttpServlet {
 		String userId = request.getParameter("userId");
 		String pass = request.getParameter("pass");
 		
-		//ユーザーインスタンス生成
-		User user = new User(userId, pass);
+		//エラーメッセージリストの作成
+		List<String> errorMessages = new ArrayList<>();
 		
-		LoginLogic loginLogic = new LoginLogic();
-		
-		//ユーザーインスタンスを渡してログイン処理の結果を格納
-		boolean result = loginLogic.execute(user);
-		
-		if(result) {
-			HttpSession session = request.getSession();
-			session.setAttribute("loginUser", user);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/LoginResult.jsp");
-			dispatcher.forward(request, response);
-		} else {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/LoginNG.jsp");
-			dispatcher.forward(request, response);
+		//入力値のチェック
+		if(userId == null || userId.isEmpty()) {
+			errorMessages.add("※ユーザーIDを入力してください");
 		}
+		if(pass == null || pass.isEmpty()) {
+			errorMessages.add("※パスワードを入力してください");
+		}
+		
+	    if(!errorMessages.isEmpty()) {  // エラーメッセージが格納された場合
+	        //エラーメッセージをリクエストスコープへ保存
+	        request.setAttribute("errorMessage", errorMessages);
+	        //フォワード
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/login.jsp");
+	        dispatcher.forward(request, response);
+	        return;
+	    }
+
+	    //ユーザーインスタンス生成
+	    User user = new User(userId, pass);
+
+	    //ログイン処理
+	    LoginLogic loginLogic = new LoginLogic();
+
+	    //ユーザーインスタンスを渡してログイン処理の結果を格納
+	    boolean result = loginLogic.execute(user);
+
+	    if(result) {
+	        HttpSession session = request.getSession();
+	        session.setAttribute("loginUser", user);
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/LoginResult.jsp");
+	        dispatcher.forward(request, response);
+	    } else {
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/LoginNG.jsp");
+	        dispatcher.forward(request, response);
+	    }
 	}
 }

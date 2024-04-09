@@ -27,7 +27,6 @@ public class RegisterServlet extends HttpServlet {
 		
 		//サーブレットクラスの動作を決定する「action」の値をリクエストパラメータから取得
 		String action = request.getParameter("action");
-		
 
 		if(action == null) { //登録開始をリクエストされたときの処理
 			//フォワード先の設定
@@ -84,22 +83,23 @@ public class RegisterServlet extends HttpServlet {
 			errorMessages.add("※そのユーザーIDは既に存在します");
 		}
 		
-		if(errorMessages.isEmpty()) { //問題がない場合
-			//登録するアカウントの情報を設定
-			Account registerAccount = new Account(userId, pass, name);
-			
-			//セッションスコープに登録ユーザーを保存
-			HttpSession session = request.getSession();
-			session.setAttribute("registerAccount", registerAccount);
-		
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/registerConfirm.jsp");
-			dispatcher.forward(request, response);
-		} else {
+		if(!errorMessages.isEmpty()) { //エラーメッセージが格納された場合
 			//エラーメッセージをリクエストスコープに保存
 			request.setAttribute("errorMessage", errorMessages);
 			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/register.jsp");
 			dispatcher.forward(request, response);
 		}
+		
+		//登録するアカウントの情報を設定
+		Account registerAccount = new Account(userId, pass, name);
+		
+		//セッションスコープに登録ユーザーを保存
+		HttpSession session = request.getSession();
+		session.setAttribute("registerAccount", registerAccount);
+		
+		//フォワード
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/registerConfirm.jsp");
+		dispatcher.forward(request, response);
 	}
 }

@@ -13,9 +13,9 @@
 		<c:out value="${loginUser.userId}" />さん、こんにちは
 		<a href="MemoServlet">メモ一覧へ</a>
 	</p>
-	<c:if test="${not empty errorMessage}">
+	<c:forEach var="errorMessage" items="${errorMessage}">
     	<p style="color:red" class="error">${errorMessage}</p>
-	</c:if>
+	</c:forEach>
 	<p>
 	 	<form action="Main" method="post">
   			<input type="text" name="title" size="50"/>
