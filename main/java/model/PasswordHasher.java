@@ -3,8 +3,14 @@ package model;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+//パスワードのハッシュ化クラス
 public class PasswordHasher {
 
+	/**
+	 * 
+	 * @param ユーザーが入力したパスワード
+	 * @return ハッシュ化したパスワード
+	 */
     public static String hashPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");

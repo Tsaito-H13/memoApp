@@ -14,7 +14,11 @@ public class AccountsDAO {
 	private final String USER = "root";
 	private final String PASS = "password";
 	
-	/** SELECT **/
+	/**
+	 * ログイン処理
+	 * @param ログイン画面から入力されたユーザー情報
+	 * @return データベースから取得したアカウント情報を格納したAccountインスタンス
+	 */
 	public Account findByLogin(User user) {
 		Account account = null;
 		
@@ -45,7 +49,11 @@ public class AccountsDAO {
 		return account;
 	}
 	
-	/** INSERT **/
+	/**
+	 * アカウント作成処理
+	 * @param アカウント作成画面から入力されたアカウント情報
+	 * @return インサートの実行結果　作成できたらtrue、出来なければfalse
+	 */
 	public boolean create(Account account) {
 		
 		try {
@@ -80,7 +88,11 @@ public class AccountsDAO {
 		return true;
 	}
 	
-	/** DELETE **/
+	/**
+	 * アカウント削除処理
+	 * @param アカウント削除画面から入力されたユーザー情報
+	 * @return デリートの実行結果 削除できればtrue、出来なければfalse
+	 */
 	public boolean delete(User user) {
 		
 		try {
@@ -114,15 +126,17 @@ public class AccountsDAO {
 		return true;
 	}
 	
+	/** ユーザーID検査 **/
 	public boolean exists(String userId) {
-	    
+		
 		try {
-	        Class.forName("com.mysql.cj.jdbc.Driver");
-	    } catch(ClassNotFoundException e) {
-	        throw new IllegalStateException("JDBCドライバを読み込めませんでした");
-	    }
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch(ClassNotFoundException e) {
+			throw new IllegalStateException("JDBCドライバを読み込めませんでした");
+		}
 		
 	    try(Connection conn = DriverManager.getConnection(URL, USER, PASS)) {
+	    	
 	        String sql = "SELECT COUNT(*) FROM ACCOUNTS WHERE user_id = ?";
 	        PreparedStatement pStmt = conn.prepareStatement(sql);
 	        pStmt.setString(1, userId);

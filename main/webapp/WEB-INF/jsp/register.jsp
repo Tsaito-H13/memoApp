@@ -9,9 +9,9 @@
 </head>
 <body>
 <h1>会員登録</h1>
-<c:if test="${not empty errorMessage}">
+<c:forEach var="errorMessage" items="${errorMessage}">
     <p style="color:red" class="error">${errorMessage}</p>
-</c:if>
+</c:forEach>
 <form action="RegisterServlet" method="post">
 ユーザーID：<input type="text" name="userId"><br>
 パスワード：<input type="password" name="pass"><br>

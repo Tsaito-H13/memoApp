@@ -14,32 +14,44 @@ import model.Memo;
 import model.MemoLogic;
 import model.User;
 
-
+//メインコントローラー
 @WebServlet("/Main")
 public class Main extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		//ログインしているか確認するためセッションスコープからユーザー情報を取得
 		HttpSession session = request.getSession();
 		User loginUser = (User)session.getAttribute("loginUser");
 		
-		if(loginUser == null) {
-			response.sendRedirect("index.jsp");
-		} else {
+		if(loginUser == null) { //ログインしていない
+			//リダイレクト
+			response.sendRedirect("index.jsp"); 
+		} else { //ログイン済み
+			//フォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/main.jsp");
 			dispatcher.forward(request, response);
 		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		//リクエストパラメータの取得
 		String title = request.getParameter("title");
 		String memo = request.getParameter("memo");
 		
-		if(title != null && title.length() != 0 && memo != null && memo.length() != 0) {
+		//入力値チェック
+		if(title != null && title.length() != 0 && memo != null && memo.length() != 0) { //入力値が正しい
+			//メモインスタンスの作成
 			Memo text = new Memo(title, memo);
+			
 			MemoLogic memoLogic = new MemoLogic();
+			
+			//メモを作成
 			memoLogic.execute(text);
-		} else {
+		} else { //入力値が正しくない
+			//エラーメッセージをリクエストスコープに保存
 			request.setAttribute("errorMessage", "※タイトルとメモを入力してください");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/main.jsp");
 			dispatcher.forward(request, response);

@@ -9,8 +9,8 @@
 <body>
 <h1>ログイン</h1>
 <form action="LoginServlet" method="post">
-ユーザーID：<input type="text" name="userId"><br>
-パスワード：<input type="password" name="pass"><br>
+ユーザーID：<input type="text" name="userId" required><br>
+パスワード：<input type="password" name="pass" required><br>
 <input type="submit" value="ログイン">
 </form>
 <a href="index.jsp">▶トップへ</a>

@@ -13,9 +13,7 @@ import javax.servlet.http.HttpSession;
 import model.LoginLogic;
 import model.User;
 
-/**
- * Servlet implementation class LoginServlet
- */
+//ログインコントローラー
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -26,11 +24,17 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		//リクエストパラメータの取得
 		String userId = request.getParameter("userId");
 		String pass = request.getParameter("pass");
 		
+		//ユーザーインスタンス生成
 		User user = new User(userId, pass);
+		
 		LoginLogic loginLogic = new LoginLogic();
+		
+		//ユーザーインスタンスを渡してログイン処理の結果を格納
 		boolean result = loginLogic.execute(user);
 		
 		if(result) {

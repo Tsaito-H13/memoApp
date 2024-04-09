@@ -15,6 +15,10 @@ public class MemoDAO {
 	private final String USER = "root";
 	private final String PASS = "password";
 	
+	/**
+	 * メモ取得
+	 * @return タイトル、内容、作成時刻を格納したmemoList
+	 */
 	public  ArrayList<HashMap<String, String>> findAll() {
 		
 		ArrayList<HashMap<String, String>> memoList = new ArrayList<>();
@@ -26,8 +30,6 @@ public class MemoDAO {
 		}
 		
 		try(Connection conn = DriverManager.getConnection(URL, USER, PASS)) {
-			
-			conn.setAutoCommit(false);
 			
 			String sql = "SELECT title, memo, modified_date FROM MEMO_DATA";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
@@ -44,8 +46,6 @@ public class MemoDAO {
 				record.put("modified_date", modified_date);
 				memoList.add(record);
 			}
-			
-			conn.commit();
 		
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -54,6 +54,11 @@ public class MemoDAO {
 		return memoList;
 	}
 	
+	/**
+	 * メモ作成
+	 * @param memo
+	 * @return メモが作成出来ればtrue、作成できなければfalse
+	 */
 	public boolean create(Memo memo) {
 		
 		try {

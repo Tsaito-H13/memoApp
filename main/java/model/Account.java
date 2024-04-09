@@ -1,8 +1,15 @@
 package model;
 
+//アカウント格納クラス
 public class Account {
+	
+	 //ユーザーID
 	private String userId;
+	
+	//パスワード
 	private String pass;
+	
+	//名前
 	private String name;
 	
 	public Account(String userId, String pass, String name) {

@@ -1,7 +1,12 @@
 package model;
 
+//ユーザー情報格納クラス
 public class User {
+	
+	//ユーザーID
 	private String userId;
+	
+	//パスワード
 	private String pass;
 
 	public User(String userId, String pass) {
@@ -15,5 +20,9 @@ public class User {
 
 	public String getPass() {
 		return pass;
+	}
+	
+	public void setPass(String pass) {
+		this.pass = pass;
 	}
 }

@@ -11,6 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpFilter;
 
+/** UTF-8フィルター **/
 @WebFilter("/*")
 public class SetEncodingFilter extends HttpFilter implements Filter {
        

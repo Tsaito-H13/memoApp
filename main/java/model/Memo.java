@@ -1,8 +1,15 @@
 package model;
 
+//メモ格納クラス
 public class Memo {
+	
+	//タイトル
 	private String title;
+	
+	//メモ
 	private String memo;
+	
+	//作成時刻
 	private String modified_date;
 	
 	public Memo(String title, String memo) {
