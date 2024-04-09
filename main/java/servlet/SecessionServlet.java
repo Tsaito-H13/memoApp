@@ -56,7 +56,6 @@ public class SecessionServlet extends HttpServlet {
 			//フォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/secession.jsp");
 			dispatcher.forward(request, response);
-			
 		}
 		
 		if(result) { //削除できた場合
