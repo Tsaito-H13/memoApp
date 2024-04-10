@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.Memo;
+import model.MemoDeleteLogic;
 import model.MemoViewLogic;
 import model.User;
 
@@ -39,6 +40,21 @@ public class MemoServlet extends HttpServlet {
 			//フォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/memo.jsp");
 			dispatcher.forward(request, response);
+		}
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		//リクエストパラメータの取得
+		int memoId = Integer.parseInt(request.getParameter("memoId"));
+		
+		//メモ削除処理
+		MemoDeleteLogic memoDeleteLogic = new MemoDeleteLogic();
+		boolean deleteResult = memoDeleteLogic.execute(memoId);
+		
+		if(deleteResult) { //削除出来た場合
+			//リダイレクト
+			response.sendRedirect("MemoServlet");
 		}
 	}
 }

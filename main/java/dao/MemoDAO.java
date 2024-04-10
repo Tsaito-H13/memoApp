@@ -40,7 +40,7 @@ public class MemoDAO {
 				int memoId = rs.getInt("memo_id");
 				String title = rs.getString("title");
 				String memo = rs.getString("memo");
-				String modifiedDate = rs.getString("modified_date");
+			    String modifiedDate = rs.getString("modified_date");
 				Memo text = new Memo(memoId, title, memo, modifiedDate);
 				memoList.add(text);
 			}
@@ -73,6 +73,43 @@ public class MemoDAO {
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, memo.getTitle());
 			pStmt.setString(2, memo.getMemo());
+			
+			int result = pStmt.executeUpdate();
+			
+			if(result != 1) {
+				conn.rollback();
+				return false;
+			}
+			
+			conn.commit();
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * メモ削除
+	 * @param memoId
+	 * @return 削除できればtrue、出来なければfalse
+	 */
+	public boolean delete(int memoId) {
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch(ClassNotFoundException e) {
+			throw new IllegalStateException("JDBCドライバを読み込めませんでした");
+		}
+		
+		try(Connection conn = DriverManager.getConnection(URL, USER, PASS)) {
+			
+			conn.setAutoCommit(false);
+			
+			String sql = "DELETE FROM MEMO_DATA WHERE memo_id=?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setInt(1, memoId);
 			
 			int result = pStmt.executeUpdate();
 			

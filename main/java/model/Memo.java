@@ -12,7 +12,7 @@ public class Memo {
 	//メモ
 	private String memo;
 	
-	//作成時刻
+	//更新時刻
 	private String modifiedDate;
 	
 	public Memo(String title, String memo) {
@@ -35,7 +35,7 @@ public class Memo {
 	public String getMemo() {
 		return memo;
 	}
-	public String modifiedDate() {
+	public String getModifiedDate() {
 		return modifiedDate;
 	}
 }
