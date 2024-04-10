@@ -38,6 +38,7 @@ public class LoginServlet extends HttpServlet {
 		if(userId == null || userId.isEmpty()) {
 			errorMessages.add("※ユーザーIDを入力してください");
 		}
+		
 		if(pass == null || pass.isEmpty()) {
 			errorMessages.add("※パスワードを入力してください");
 		}
@@ -48,7 +49,6 @@ public class LoginServlet extends HttpServlet {
 	        //フォワード
 	        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/login.jsp");
 	        dispatcher.forward(request, response);
-	        return;
 	    }
 
 	    //ユーザーインスタンス生成

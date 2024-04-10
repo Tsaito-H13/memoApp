@@ -1,8 +1,7 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.Memo;
 import model.MemoViewLogic;
 import model.User;
 
@@ -24,9 +24,9 @@ public class MemoServlet extends HttpServlet {
 		
 		//メモの取得
 		MemoViewLogic memoViewLogic = new MemoViewLogic();
-		ArrayList<HashMap<String, String>> memoList = memoViewLogic.execute();
+		List<Memo> memoList = memoViewLogic.execute();
 		//取得したメモをリクエストスコープに格納
-		request.setAttribute("memoList", memoList);
+		request.setAttribute("memoList", memoList);		
 		
 		//ログインしているか確認するためセッションスコープからユーザー情報を取得
 		HttpSession session = request.getSession();
@@ -40,9 +40,5 @@ public class MemoServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/memo.jsp");
 			dispatcher.forward(request, response);
 		}
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 	}
 }

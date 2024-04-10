@@ -3,6 +3,9 @@ package model;
 //メモ格納クラス
 public class Memo {
 	
+	//メモID
+	private int memoId;
+	
 	//タイトル
 	private String title;
 	
@@ -10,25 +13,29 @@ public class Memo {
 	private String memo;
 	
 	//作成時刻
-	private String modified_date;
+	private String modifiedDate;
 	
 	public Memo(String title, String memo) {
 		this.title = title;
 		this.memo = memo;
 	}
-	public Memo(String title, String memo, String modified_date) {
+	public Memo(int memoId, String title, String memo, String modifiedDate) {
+		this.memoId = memoId;
 		this.title = title;
 		this.memo = memo;
-		this.modified_date = modified_date;
+		this.modifiedDate = modifiedDate;
 	}
 
+	public int getMemoId() {
+		return memoId;
+	}
 	public String getTitle() {
 		return title;
 	}
 	public String getMemo() {
 		return memo;
 	}
-	public String getModifiedDate() {
-		return modified_date;
+	public String modifiedDate() {
+		return modifiedDate;
 	}
 }

@@ -60,16 +60,19 @@ public class Main extends HttpServlet {
 			//フォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/main.jsp");
 			dispatcher.forward(request, response);
+		} else { //問題がない場合
+			//メモインスタンスの作成
+			Memo text = new Memo(title, memo);
+			
+			//メモ作成処理インスタンスの作成
+			MemoLogic memoLogic = new MemoLogic();
+				
+			//メモ作成を実行
+			memoLogic.execute(text);
+			
+			//フォワード
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/submit.jsp");
+			dispatcher.forward(request, response);			
 		}
-		
-		Memo text = new Memo(title, memo);
-			
-		MemoLogic memoLogic = new MemoLogic();
-			
-		//メモを作成
-		memoLogic.execute(text);
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/submit.jsp");
-		dispatcher.forward(request, response);
 	}
 }

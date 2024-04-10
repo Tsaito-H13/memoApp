@@ -1,7 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 import dao.MemoDAO;
 
@@ -12,12 +11,10 @@ public class MemoViewLogic {
 	 * データベースのメモを取得して表示
 	 * @return メモのタイトル、内容、作成時刻を格納したmemoList
 	 */
-	public ArrayList<HashMap<String, String>> execute() {
+	public List<Memo> execute() {
 		MemoDAO dao = new MemoDAO();
-		
 		//MemoDAOのfindAllメソッドで取得した情報をmemoListに格納
-		ArrayList<HashMap<String, String>> memoList = dao.findAll();
-		
+		List<Memo> memoList = dao.findAll();
 		return memoList;
 	}
 }

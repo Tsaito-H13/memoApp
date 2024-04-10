@@ -3,12 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>どこつぶ</title>
+	<meta charset="UTF-8">
+	<title>どこつぶ</title>
 </head>
 <body>
-<h1>どこつぶログアウト</h1>
-<p>ログアウトしました</p>
-<a href="index.jsp">▶トップへ</a><br>
+	<h1>どこつぶログアウト</h1>
+	<p>ログアウトしました</p>
+	<a href="index.jsp">▶トップへ</a><br>
 </body>
 </html>

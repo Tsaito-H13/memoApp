@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 import model.Memo;
 
@@ -19,9 +19,9 @@ public class MemoDAO {
 	 * メモ取得
 	 * @return タイトル、内容、作成時刻を格納したmemoList
 	 */
-	public  ArrayList<HashMap<String, String>> findAll() {
+	public  List<Memo> findAll() {
 		
-		ArrayList<HashMap<String, String>> memoList = new ArrayList<>();
+		List<Memo> memoList = new ArrayList<>();
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -31,20 +31,18 @@ public class MemoDAO {
 		
 		try(Connection conn = DriverManager.getConnection(URL, USER, PASS)) {
 			
-			String sql = "SELECT title, memo, modified_date FROM MEMO_DATA";
+			String sql = "SELECT memo_id, title, memo, modified_date FROM MEMO_DATA ORDER BY memo_id DESC";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			
 			ResultSet rs = pStmt.executeQuery();
 			
 			while(rs.next()) {
-				HashMap<String, String> record = new HashMap<>();
+				int memoId = rs.getInt("memo_id");
 				String title = rs.getString("title");
-				record.put("title", title);
 				String memo = rs.getString("memo");
-				record.put("memo", memo);
-				String modified_date = rs.getString("modified_date");
-				record.put("modified_date", modified_date);
-				memoList.add(record);
+				String modifiedDate = rs.getString("modified_date");
+				Memo text = new Memo(memoId, title, memo, modifiedDate);
+				memoList.add(text);
 			}
 		
 		} catch(SQLException e) {

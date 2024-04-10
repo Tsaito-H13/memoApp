@@ -4,17 +4,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>メモウェブ</title>
+	<meta charset="UTF-8">
+	<title>メモウェブ</title>
 </head>
 <body>
 	<h1>メモ一覧</h1>
+	<p>
 	<c:forEach var="memo" items="${memoList}">
 		<hr/>
+		<div><c:out value="${memo.memoId}" /></div>
 		<div><c:out value="${memo.title}" /></div>
-		<div><c:out value="${memo.modified_date}" /></div>
+		<div><c:out value="${memo.modifiedDate}" /></div>
 		<div><c:out value="${memo.memo}" /></div>
-	</c:forEach><br>
-	<a href="Main">ホームへ戻る</a>
+	</c:forEach>
+	</p>
+	<a href="Main">ホームへ戻る</a><br>
 </body>
 </html>
