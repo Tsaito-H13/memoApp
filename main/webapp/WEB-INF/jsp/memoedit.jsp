@@ -8,25 +8,20 @@
 	<title>メモウェブ</title>
 </head>
 <body>
-	<h1>メモウェブHOME</h1>
-	<p>
-		<c:out value="${loginUser.userId}" />さん、こんにちは
-		<a href="MemoServlet">メモ一覧へ</a>
-		<a href="MemoGarbageServlet">削除したメモ一覧</a>
-	</p>
+	<h1>メモ編集</h1>
 	<c:forEach var="errorMessage" items="${errorMessage}">
     	<p style="color:red" class="error">${errorMessage}</p>
 	</c:forEach>
 	<p>
-	 	<form action="Main" method="post">
+	 	<form action="MemoEditServlet" method="post">
   			<input type="text" name="title" size="50"/>
   			<br/>
   			<textarea rows="5" cols="80" name="memo"></textarea>
   			<br/>
-  			<input type="submit"/>
+  			<input type="hidden" name="memoId" value="${memoId}">
+  			<input type="submit" value="編集">
  		</form>
  	</p>
-	<a href="LogoutServlet">ログアウト</a>
-	<a href="SecessionServlet">退会</a><br>
+ 	<a href="MemoServlet">メモ一覧へ</a>
 </body>
 </html>

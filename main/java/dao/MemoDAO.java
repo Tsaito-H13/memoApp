@@ -8,15 +8,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import config.DBProperties;
 import model.Memo;
 
 public class MemoDAO {
-	private final String URL = "jdbc:mysql://localhost/memoApp";
-	private final String USER = "root";
-	private final String PASS = "password";
+    private final String URL = DBProperties.getUrl();
+    private final String USER = DBProperties.getUser();
+    private final String PASS = DBProperties.getPassword();
 	
 	/**
-	 * メモ取得
+	 * メモ全取得
 	 * @return タイトル、内容、作成時刻を格納したmemoList
 	 */
 	public  List<Memo> findAll() {
@@ -31,7 +32,7 @@ public class MemoDAO {
 		
 		try(Connection conn = DriverManager.getConnection(URL, USER, PASS)) {
 			
-			String sql = "SELECT memo_id, title, memo, modified_date FROM MEMO_DATA ORDER BY memo_id DESC";
+			String sql = "SELECT memo_id, title, memo, create_date, modified_date FROM MEMO_DATA WHERE is_deleted = 0 ORDER BY memo_id DESC";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			
 			ResultSet rs = pStmt.executeQuery();
@@ -39,9 +40,48 @@ public class MemoDAO {
 			while(rs.next()) {
 				int memoId = rs.getInt("memo_id");
 				String title = rs.getString("title");
-				String memo = rs.getString("memo");
+				String content = rs.getString("memo");
+				String createDate = rs.getString("create_date");
 			    String modifiedDate = rs.getString("modified_date");
-				Memo text = new Memo(memoId, title, memo, modifiedDate);
+				Memo text = new Memo(memoId, title, content, createDate, modifiedDate);
+				memoList.add(text);
+			}
+		
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return memoList;
+	}
+	
+	/**
+	 * メモ全取得
+	 * @return タイトル、内容、作成時刻を格納したmemoList
+	 */
+	public  List<Memo> deleteFindAll() {
+		
+		List<Memo> memoList = new ArrayList<>();
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch(ClassNotFoundException e) {
+			throw new IllegalStateException("JDBCドライバを読み込めませんでした");
+		}
+		
+		try(Connection conn = DriverManager.getConnection(URL, USER, PASS)) {
+			
+			String sql = "SELECT memo_id, title, memo, create_date, modified_date FROM MEMO_DATA WHERE is_deleted = 1 ORDER BY memo_id DESC";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			
+			ResultSet rs = pStmt.executeQuery();
+			
+			while(rs.next()) {
+				int memoId = rs.getInt("memo_id");
+				String title = rs.getString("title");
+				String content = rs.getString("memo");
+				String createDate = rs.getString("create_date");
+			    String modifiedDate = rs.getString("modified_date");
+				Memo text = new Memo(memoId, title, content, createDate, modifiedDate);
 				memoList.add(text);
 			}
 		
@@ -69,7 +109,7 @@ public class MemoDAO {
 			
 			conn.setAutoCommit(false);
 			
-			String sql = "INSERT INTO MEMO_DATA(category, title, memo, create_date, modified_date) VALUES(0,?,?,cast(now() as datetime), cast(now() as datetime))";
+			String sql = "INSERT INTO MEMO_DATA(category, title, memo, create_date, modified_date, is_deleted) VALUES(0,?,?,cast(now() as datetime), cast(now() as datetime), 0)";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, memo.getTitle());
 			pStmt.setString(2, memo.getMemo());
@@ -89,6 +129,110 @@ public class MemoDAO {
 		}
 		return true;
 	}
+	
+	/**
+	 * メモ編集
+	 * @param memo
+	 * @return 編集できればtrue、出来なければfalse
+	 */
+	public boolean edit(Memo memo) {
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch(ClassNotFoundException e) {
+			throw new IllegalStateException("JDBCドライバを読み込めませんでした");
+		}
+		
+		try(Connection conn = DriverManager.getConnection(URL, USER, PASS)) {
+			
+			conn.setAutoCommit(false);
+			
+			String sql = "UPDATE MEMO_DATA SET title = ?, memo = ?, modified_date = cast(now() as datetime)  WHERE memo_id=?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, memo.getTitle());
+			pStmt.setString(2, memo.getMemo());
+			pStmt.setInt(3, memo.getMemoId());
+			
+			int result = pStmt.executeUpdate();
+			
+			if(result != 1) {
+				conn.rollback();
+				return false;
+			}
+			
+			conn.commit();
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean logicalDelete(int memoId) {
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch(ClassNotFoundException e) {
+			throw new IllegalStateException("JDBCドライバを読み込めませんでした");
+		}
+		
+		try(Connection conn = DriverManager.getConnection(URL, USER, PASS)) {
+			
+			conn.setAutoCommit(false);
+			
+			String sql = "UPDATE MEMO_DATA SET is_deleted = 1 WHERE memo_id=?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setInt(1, memoId);
+			
+			int result = pStmt.executeUpdate();
+			
+			if(result != 1) {
+				conn.rollback();
+				return false;
+			}
+			
+			conn.commit();
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	public boolean restore(int memoId) {
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch(ClassNotFoundException e) {
+			throw new IllegalStateException("JDBCドライバを読み込めませんでした");
+		}
+		
+		try(Connection conn = DriverManager.getConnection(URL, USER, PASS)) {
+			
+			conn.setAutoCommit(false);
+			
+			String sql = "UPDATE MEMO_DATA SET is_deleted = 0 WHERE memo_id=?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setInt(1, memoId);
+			
+			int result = pStmt.executeUpdate();
+			
+			if(result != 1) {
+				conn.rollback();
+				return false;
+			}
+			
+			conn.commit();
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
 	
 	/**
 	 * メモ削除

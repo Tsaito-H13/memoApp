@@ -6,13 +6,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import config.DBProperties;
 import model.Account;
 import model.User;
 
 public class AccountsDAO {
-	private final String URL = "jdbc:mysql://localhost/memoApp";
-	private final String USER = "root";
-	private final String PASS = "password";
+    private final String URL = DBProperties.getUrl();
+    private final String USER = DBProperties.getUser();
+    private final String PASS = DBProperties.getPassword();
 	
 	/**
 	 * ログイン処理

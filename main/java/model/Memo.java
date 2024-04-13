@@ -12,6 +12,9 @@ public class Memo {
 	//メモ
 	private String memo;
 	
+	//作成時刻
+	private String createDate;
+	
 	//更新時刻
 	private String modifiedDate;
 	
@@ -19,10 +22,16 @@ public class Memo {
 		this.title = title;
 		this.memo = memo;
 	}
-	public Memo(int memoId, String title, String memo, String modifiedDate) {
+	public Memo(int memoId, String title, String memo) {
 		this.memoId = memoId;
 		this.title = title;
 		this.memo = memo;
+	}
+	public Memo(int memoId, String title, String memo, String createDate, String modifiedDate) {
+		this.memoId = memoId;
+		this.title = title;
+		this.memo = memo;
+		this.createDate = createDate;
 		this.modifiedDate = modifiedDate;
 	}
 
@@ -34,6 +43,9 @@ public class Memo {
 	}
 	public String getMemo() {
 		return memo;
+	}
+	public String getCreateDate() {
+		return createDate;
 	}
 	public String getModifiedDate() {
 		return modifiedDate;

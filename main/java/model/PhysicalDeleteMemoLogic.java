@@ -2,13 +2,11 @@ package model;
 
 import dao.MemoDAO;
 
-//メモ削除処理クラス
-public class MemoDeleteLogic {
-	
+public class PhysicalDeleteMemoLogic {
 	/**
-	 * メモ削除処理
+	 * メモ物理削除処理
 	 * @param memoId
-	 * @return メモ削除実行の結果　削除できればtrue、出来なければfalse
+	 * @return メモ物理削除実行の結果　削除できればtrue、出来なければfalse
 	 */
 	public boolean execute(int memoId) {
 		MemoDAO dao = new MemoDAO();
