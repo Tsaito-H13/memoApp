@@ -127,7 +127,11 @@ public class AccountsDAO {
 		return true;
 	}
 	
-	/** ユーザーID検査 **/
+	/**
+	 *  ユーザーID検査
+	 * @param userId
+	 * @return 同じユーザーが存在すればtrue、存在しなければfalse
+	 */
 	public boolean exists(String userId) {
 		
 		try {

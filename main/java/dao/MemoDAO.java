@@ -18,7 +18,7 @@ public class MemoDAO {
 	
 	/**
 	 * メモ全取得
-	 * @return タイトル、内容、作成時刻を格納したmemoList
+	 * @return メモ情報を格納したmemoList
 	 */
 	public  List<Memo> findAll() {
 		
@@ -55,8 +55,8 @@ public class MemoDAO {
 	}
 	
 	/**
-	 * メモ全取得
-	 * @return タイトル、内容、作成時刻を格納したmemoList
+	 * 論理削除されたメモ全取得
+	 * @return　メモ情報を格納したmemoList
 	 */
 	public  List<Memo> deleteFindAll() {
 		
@@ -169,6 +169,11 @@ public class MemoDAO {
 		return true;
 	}
 	
+	/**
+	 * 論理削除
+	 * @param memoId
+	 * @return　引数のmemoIdで検索されたメモを論理削除出来ればtrue、出来なければfalse
+	 */
 	public boolean logicalDelete(int memoId) {
 		
 		try {
@@ -201,6 +206,11 @@ public class MemoDAO {
 		return true;
 	}
 
+	/**
+	 * 復元
+	 * @param memoId
+	 * @return　論理削除されたものを復元できればtrue、出来なければfalse
+	 */
 	public boolean restore(int memoId) {
 		
 		try {
