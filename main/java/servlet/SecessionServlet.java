@@ -44,7 +44,7 @@ public class SecessionServlet extends HttpServlet {
 				//フォワード先の設定
 				forwardPath = "WEB-INF/jsp/secessionDone.jsp";
 				//不要になったセッションスコープ内のインスタンスを削除
-				session.removeAttribute("secessionUser");
+				session.invalidate();
 			} else { //削除ができなかった場合
 				//フォワード先の設定
 				forwardPath = "WEB-INF/jsp/secessionNG.jsp";
@@ -68,9 +68,9 @@ public class SecessionServlet extends HttpServlet {
 		List<String> errorMessages = new ArrayList<>();
 		
 		//入力値のチェック
-		if(userId == null || userId.isEmpty()) {
-			errorMessages.add("※ユーザーIDを入力してください");
-		}
+//		if(userId == null || userId.isEmpty()) {
+//			errorMessages.add("※ユーザーIDを入力してください");
+//		}
 		if(pass == null || pass.isEmpty()) {
 			errorMessages.add("※パスワードを入力してください");
 		}

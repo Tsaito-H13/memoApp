@@ -4,10 +4,10 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>どこつぶ</title>
+	<title>メモウェブ</title>
 </head>
 <body>
-	<h1>どこつぶログアウト</h1>
+	<h1>メモウェブログアウト</h1>
 	<p>ログアウトしました</p>
 	<a href="index.jsp">▶トップへ</a><br>
 </body>

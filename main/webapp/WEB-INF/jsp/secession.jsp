@@ -13,7 +13,7 @@
     	<p style="color:red" class="error">${errorMessage}</p>
 	</c:forEach>
 	<form action="SecessionServlet" method="post">
-		ユーザーID:<input type="text" name="userId"><br>
+		<input type="hidden" name="userId" value="${loginUser.userId}">
 		パスワード:<input type="password" name="pass"><br>
 		<input type="submit" value="退会"><br>
 		<a href="Main">キャンセル</a><br>
