@@ -60,14 +60,13 @@ public class LoginServlet extends HttpServlet {
 	    //ユーザーインスタンスを渡してログイン処理の結果を格納
 	    boolean result = loginLogic.execute(user);
 
-	    if(result) {
-	        HttpSession session = request.getSession();
-	        session.setAttribute("loginUser", user);
-	        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/LoginResult.jsp");
-	        dispatcher.forward(request, response);
-	    } else {
-	        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/LoginNG.jsp");
-	        dispatcher.forward(request, response);
-	    }
+	    //結果をリクエストスコープへ保存
+	    request.setAttribute("result", result);
+	    
+	    //ユーザー情報をセッションスコープに保存
+	    HttpSession session = request.getSession();
+	    session.setAttribute("loginUser", user);
+	    RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/LoginResult.jsp");
+	    dispatcher.forward(request, response);
 	}
 }

@@ -10,6 +10,7 @@ import config.DBProperties;
 import model.Account;
 import model.User;
 
+//アカウントDAO
 public class AccountsDAO {
     private final String URL = DBProperties.getUrl();
     private final String USER = DBProperties.getUser();

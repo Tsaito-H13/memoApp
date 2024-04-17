@@ -32,7 +32,7 @@ public class SecessionServlet extends HttpServlet {
 			//フォワード先の設定
 			forwardPath = "WEB-INF/jsp/secession.jsp";
 		} else if(action.equals("done")) { //削除実行をリクエストされたときの処理
-			//セッションスコープに保存された削除ユーザーを取得
+			//セッションスコープに保存されたユーザー情報を取得
 			HttpSession session = request.getSession();
 			User secessionUser = (User)session.getAttribute("secessionUser");
 			
@@ -56,7 +56,6 @@ public class SecessionServlet extends HttpServlet {
 		//設定先にフォワード
 		RequestDispatcher dispatcher = request.getRequestDispatcher(forwardPath);
 		dispatcher.forward(request, response);
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

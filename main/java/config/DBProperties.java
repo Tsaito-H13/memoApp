@@ -16,14 +16,26 @@ public class DBProperties {
         }
     }
 
+    /**
+     * DBのURL
+     * @return プロパティーファイルから取得したURL
+     */
     public static String getUrl() {
         return properties.getProperty("url");
     }
 
+    /**
+     * DBのユーザー名
+     * @return プロパティーファイルから取得したユーザー名
+     */
     public static String getUser() {
         return properties.getProperty("user");
     }
 
+    /**
+     * DBのパスワード
+     * @return プロパティーファイルから取得したパスワード
+     */
     public static String getPassword() {
         return properties.getProperty("password");
     }

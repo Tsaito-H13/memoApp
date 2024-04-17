@@ -40,17 +40,14 @@ public class RegisterServlet extends HttpServlet {
 			RegisterLogic resisterLogic = new RegisterLogic();
 			boolean registerResult = resisterLogic.execute(registerAccount);
 			
-			if(registerResult) { //登録が出来た場合
-				//フォワード先の設定
-				forwardPath = "WEB-INF/jsp/registerDone.jsp";
-				//不要になったセッションスコープ内のインスタンスを削除
-				session.removeAttribute("registerAccount");
-			} else { //登録ができなかった場合
-				//フォワード先の設定
-				forwardPath = "WEB-INF/jsp/registerNG.jsp";
-				//不要になったセッションスコープ内のインスタンスを削除
-				session.removeAttribute("registerAccount");
-			}
+			//結果をリクエストスコープへ保存
+			request.setAttribute("registerResult", registerResult);
+			
+			//フォワード先の設定
+			forwardPath = "WEB-INF/jsp/registerDone.jsp";
+			
+			//不要になったセッションスコープ内のインスタンスを削除
+			session.removeAttribute("registerAccount");
 		}
 		
 		//設定先にフォワード

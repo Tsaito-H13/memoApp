@@ -11,6 +11,7 @@ import java.util.List;
 import config.DBProperties;
 import model.Memo;
 
+//メモDAO
 public class MemoDAO {
     private final String URL = DBProperties.getUrl();
     private final String USER = DBProperties.getUser();
@@ -245,7 +246,7 @@ public class MemoDAO {
 
 	
 	/**
-	 * メモ削除
+	 * 物理削除
 	 * @param memoId
 	 * @return 削除できればtrue、出来なければfalse
 	 */

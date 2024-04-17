@@ -12,11 +12,10 @@
 	<p>
 	<c:forEach var="memo" items="${memoList}">
 		<hr/>
-		<div><c:out value="${memo.memoId}" /></div>
-		<div><c:out value="${memo.createDate}" /></div>
-		<div><c:out value="${memo.modifiedDate}" /></div>
-		<div><c:out value="${memo.title}" /></div>
-		<div><c:out value="${memo.memo}" /></div>
+		<div>作成日：<c:out value="${memo.createDate}" /></div>
+		<div>更新日：<c:out value="${memo.modifiedDate}" /></div>
+		<div>タイトル：<c:out value="${memo.title}" /></div>
+		<div>内容：<c:out value="${memo.memo}" /></div>
 		<form action="MemoRestoreServlet" method="post">
 			<input type="hidden" name="memoId" value="${memo.memoId}">
 			<input type="submit" value="復元">
