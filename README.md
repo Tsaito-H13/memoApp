@@ -41,21 +41,19 @@ XSS対策としてJSTLを使用しています。
 
 # 実行動作
  **アカウント作成**
- 
-https://github.com/Tsaito-H13/memoApp/assets/159527566/98b873b9-b14e-4e44-b095-469dbe478703
+
+ https://github.com/Tsaito-H13/memoApp/assets/159527566/34e1b88f-5085-49af-8519-e67b252d779a
 
  **ログイン**
 
-https://github.com/Tsaito-H13/memoApp/assets/159527566/6b6deef9-be04-45eb-8503-36c76cc34c87
+ https://github.com/Tsaito-H13/memoApp/assets/159527566/983146d5-5009-47b2-8887-0802b85d211f
 
  **メモ作成、編集、削除**
 
-https://github.com/Tsaito-H13/memoApp/assets/159527566/ca558bfd-315c-4624-a5f0-9767d100765b
+ https://github.com/Tsaito-H13/memoApp/assets/159527566/6ce7976a-1a6b-4932-91ac-fefd4ab408f3
 
-https://github.com/Tsaito-H13/memoApp/assets/159527566/13528a86-d441-4cd9-9195-6ee24ea41eae
-
-https://github.com/Tsaito-H13/memoApp/assets/159527566/e5ac5948-4333-4d00-acd8-a477d51f5d15
+ https://github.com/Tsaito-H13/memoApp/assets/159527566/88937992-c1cc-43ea-9855-136b5aa2ebc3
 
  **ログアウト、アカウント削除**
 
-https://github.com/Tsaito-H13/memoApp/assets/159527566/e72ebb58-ca95-4fb0-9e56-18e37f800b55
+ https://github.com/Tsaito-H13/memoApp/assets/159527566/f7b2914a-ce57-4a2c-9c22-6857acb71416
