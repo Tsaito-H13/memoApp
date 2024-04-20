@@ -1,10 +1,12 @@
-リンク：https://memoweb.onrender.com/memoweb
+# ページリンク
+## https://memoweb.onrender.com/memoweb
 
 # 開発環境
 Eclipse ver.2023で作成しました。
 
 言語はJava、データベースはMySQLを使用しています。  
-(Renderでデプロイをしたので実行環境ではPostgreSqlを使用しています）
+(Renderでデプロイしたのですが  
+ Postgresqlしかなかったので実行環境ではPostgreSqlを使用しています）
 
 ハンバーガーメニューとモーダルウィンドウの実装のためにJavaScriptを使用しています。
 
