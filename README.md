@@ -6,7 +6,7 @@
 
 - JavaとJavaScriptとCSS、データベースはMySQLを使用しています。  
 (Renderでデプロイしたのですが、
-Postgresqlしかなかったので実行環境ではPostgreSqlを使用しています）
+Postgresqlしかなかったので実行環境ではPostgresqlを使用しています）
 
 - フレームワークは使用せず、動的Webプロジェクトで作成しています。
 
